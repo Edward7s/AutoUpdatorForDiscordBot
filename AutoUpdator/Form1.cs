@@ -63,7 +63,7 @@ namespace AutoUpdator
                 Update = true;
                 this.Opacity = 1;
                 this.ShowInTaskbar = true;
-            }  
+            }
             else
             {
                 Task.Run(() =>
@@ -93,16 +93,17 @@ namespace AutoUpdator
             winRar.EnableRaisingEvents = true;
             winRar.StartInfo.Arguments = String.Format("x -p- {0} {1}", rarPath, ExeDir);
             winRar.Start();
+            winRar.WaitForExit();
             Task.Run(() =>
             {
                 while (true)
                 {
                     Thread.Sleep(200);
                     if (!Directory.Exists(ExeDir + @"win-x86")) continue;
-                    winRar.Kill();
                     Thread.Sleep(2000);
                     if (File.Exists(ExeDir + @"VRCDiscordBotNotifier.exe"))
                         File.Delete(ExeDir + @"VRCDiscordBotNotifier.exe");
+                    Thread.Sleep(1000);
                     var files = new DirectoryInfo(ExeDir + @"win-x86\").GetFiles();
                     for (int i = 0; i < files.Length; i++)
                     {
@@ -159,10 +160,7 @@ namespace AutoUpdator
             }
             return string.Empty;
         }
-
         private void Write(object obj) =>
             Text.Text += "\n" + obj.ToString();
-
-
     }
 }
