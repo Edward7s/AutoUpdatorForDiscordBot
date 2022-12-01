@@ -39,7 +39,7 @@ namespace AutoUpdator
                 this.Opacity = 1;
                 this.ShowInTaskbar = true;
                 Text.ForeColor = Color.Red;
-                Write(" The Arguments Is Missing Please Do Not Open The Exe By Yourself.");
+                Write("The Arguments Is Missing Please Do Not Open The Exe By Yourself.");
                 return;
             }
 
@@ -56,8 +56,9 @@ namespace AutoUpdator
             Write(new StringBuilder().AppendFormat("Download URl: {0}", JObject["assets"][0]["browser_download_url"]));
             Write(new StringBuilder().AppendFormat("ChangeLog: {0}", JObject["body"]));
 
-            if (Arguments[0] != JObject["tag_name"].ToString())
+            if (Arguments[1] != JObject["tag_name"].ToString())
             {
+                Title.Text = "Current Version Is Outdated.";
                 Write("Current Version Is Outdated.");
                 Update = true;
                 this.Opacity = 1;
@@ -76,7 +77,7 @@ namespace AutoUpdator
         private void button1_Click(object sender, EventArgs e)
         {
             if (!Update) return;
-            Title.Text = "Updating In Proggress";
+            Title.Text = "Updating In Proggress.";
             var pros = Process.GetProcessesByName("VRCDiscordBotNotifier");
             if (pros.Length != 0)
                 for (int i = 0; i < pros.Length; i++)
